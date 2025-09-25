@@ -6,3 +6,4 @@ __pycache__/
 
 # User data
 memory_core.json
+.DS_Store

@@ -1,6 +1,6 @@
-# Core Memory
+# CoreMemory-MCP
 
-A lightweight, file-based, long-term memory engine for AI agents.
+A local, MCP-compliant, long-term memory *service* for AI agents.
 
 ---
 
@@ -8,160 +8,117 @@ A lightweight, file-based, long-term memory engine for AI agents.
 
 ---
 
-## What is Core Memory?
+## What is CoreMemory-MCP?
 
-Core Memory is a Python module that provides a simple and persistent long-term memory for AI agents. It allows an agent to retain and recall information across different sessions, overcoming the limitations of finite context windows. It works by storing structured memories in a local JSON file, acting as a searchable, long-term knowledge base.
+CoreMemory-MCP is a background service that provides a simple and persistent long-term memory for any AI agent that supports the **Model Context Protocol (MCP)**. It allows tools like **Cursor**, **Gemini-CLI**, and **Claude Code-Cli** to retain and recall information across sessions.
 
-## Why Core Memory?
+It runs as a standalone server on your local machine, acting as a language-agnostic, pluggable brain for your favorite AI tools.
 
-Modern LLM-powered agents are incredibly powerful but suffer from a fundamental limitation: they are stateless. Once a conversation ends, or the context window is full, information is lost. Core Memory solves this by providing:
+## How It Works
 
--   **Statefulness**: Remembers key facts, user preferences, and past interactions.
--   **Context Enrichment**: Automatically injects relevant memories into prompts to give the agent better context.
--   **Efficiency**: Reduces the need to re-feed the same information, saving tokens and cost.
--   **Knowledge Persistence**: Builds a permanent, searchable knowledge base over time.
--   **Local-First & Private**: All data is stored locally on your machine. You own your data.
+The architecture is a standard client-server model based on the MCP standard:
 
-## Key Features
+`[Your Agent / IDE] <--> [MCP (JSON-RPC over HTTP)] <--> [Core Memory Service]`
 
--   **Simple File-Based Storage**: Uses a human-readable `memory_core.json` file.
--   **Structured Memories**: Each memory includes content, a summary, timestamp, importance score, and source.
--   **Tagging System**: Supports adding tags to memories for efficient, topic-based retrieval.
--   **Developer-Friendly API**: A clean and simple Python API for all core operations.
--   **Lightweight & Dependency-Free**: Written in standard Python with no external libraries required.
+1.  You run the Core Memory service.
+2.  You configure your client application (e.g., Cursor, Gemini-CLI) to connect to the service.
+3.  Your client application can then discover and execute the memory tools (`memory.add`, `memory.search`, etc.) provided by the service.
 
 ## Installation
 
-Currently, you can use Core Memory by simply cloning this repository and placing the `core_memory.py` file in your project's source directory.
+Clone the repository and install the required Python packages.
 
 ```bash
-# No installation required, just copy the file to your project.
+git clone https://github.com/michaelfeng/CoreMemory-MCP.git
+cd CoreMemory-MCP
+pip install -r requirements.txt
 ```
 
-## How to Use (API Guide)
+## Running the Service
 
-Core Memory is designed to be used as a simple Python library. Import the functions from the `core_memory.py` module.
+Run the `memory_service.py` script in your terminal to start the server.
 
-### Adding a Memory
-
-```python
-import core_memory
-
-# Add a simple memory with tags and importance
-new_mem = core_memory.add_memory(
-    content="The user's favorite programming language is Python.",
-    tags=['user', 'preference', 'python'],
-    importance=8
-)
-
-print(f"Added memory with ID: {new_mem['id']}")
+```bash
+python memory_service.py
 ```
 
-### Searching Memories
-
-Search is case-insensitive and matches against content, summary, and tags.
-
-```python
-import core_memory
-
-# Search for all memories related to 'python'
-results = core_memory.search_memory("python")
-
-for mem in results:
-    print(f"Found: {mem['summary']}")
+You will see output indicating the service is running and ready to accept connections:
 ```
-
-### Listing All Memories
-
-```python
-import core_memory
-
-all_memories = core_memory.list_memories()
-
-print(f"Total memories in database: {len(all_memories)}")
+--- Starting Core Memory MCP Service ---
+Compatible with the Model Context Protocol.
+Listening on http://127.0.0.1:5001
+Access the API at the /mcp endpoint.
+Use Ctrl+C to stop.
 ```
+**Important:** Keep this terminal window open. The service needs to be running in the background for your clients to connect to it.
 
-### Deleting a Memory
+## Configuring Your Client
 
-```python
-import core_memory
+Here are specific instructions for popular tools that support MCP.
 
-# You need the ID of the memory to delete it
-memory_id_to_delete = "... a-valid-uuid-from-a-memory ..."
+### For Gemini-CLI
 
-was_deleted = core_memory.delete_memory(memory_id_to_delete)
+The Google Gemini CLI can be configured to automatically start and use MCP servers.
 
-if was_deleted:
-    print(f"Memory {memory_id_to_delete} was deleted.")
+1.  Open the Gemini CLI settings file, typically located at `~/.gemini/settings.json`.
+2.  Add an entry to the `mcp_servers` list. You must provide the **absolute path** to the `memory_service.py` script.
+
+**Example `settings.json`:**
+```json
+{
+  "mcp_servers": [
+    {
+      "name": "CoreMemory",
+      "command": [
+        "python",
+        "/path/to/your/CoreMemory-MCP/memory_service.py"
+      ]
+    }
+  ]
+}
 ```
+*Replace `/path/to/your/CoreMemory-MCP/` with the actual absolute path on your system.*
 
-## When to Use?
+3.  Save the file. The next time you run `gemini`, it will automatically start the memory service and have access to the `memory.*` tools.
 
-Use Core Memory whenever you want your agent to remember information for longer than a single session. 
+### For Cursor
 
--   **User Preferences**: "Please always respond in Markdown."
+Cursor uses MCP for its deep AI integrations. To connect CoreMemory-MCP, you can configure it as a tool source.
 
--   **Session Summaries**: Storing a summary of a long conversation for future reference.
--   **Task-Specific Context**: Remembering the steps taken to debug a piece of code.
+1.  In Cursor, open the settings (e.g., via `Cmd/Ctrl + ,`).
+2.  Search for settings related to **"Tools"**, **"AI Sources"**, or **"MCP"**.
+3.  Look for an option to **"Add a new MCP Server"** or **"Tool Provider"**.
+4.  In the configuration, provide the address of your **running** Core Memory service: `http://127.0.0.1:5001/mcp`.
+5.  Save the settings. Cursor should now be able to discover and use the `memory.*` tools.
 
-## Integration with AI Agents
+*(Note: Cursor's UI for this may evolve. Please refer to their official documentation for the most up-to-date instructions on adding external MCP tool providers.)*
 
-Core Memory is a library, not a standalone application. It is meant to be integrated into the logic of an AI agent.
+### For Claude Code-Cli
 
-The primary integration pattern is for the agent to import and call the `core_memory` functions based on the user's intent.
+Claude Code-Cli also supports MCP for external tooling.
+The configuration process is expected to be similar to Gemini-CLI, likely involving a central configuration file where you can declare MCP servers.
 
-Here is a simplified example of an agent's main loop:
+1.  Locate the main configuration file for Claude Code-Cli (e.g., it might be in `~/.claude/config.json`).
+2.  Add an entry for the Core Memory MCP server, similar to the Gemini-CLI example.
 
-```python
-import core_memory
-
-def process_user_input(user_input: str):
-    # This is where the agent's logic lives.
-    # The agent developer decides how and when to call the memory engine.
-
-    if user_wants_to_remember(user_input):
-        # Logic to extract content from user_input
-        content_to_remember = "..."
-        core_memory.add_memory(content=content_to_remember)
-        print("Agent: Okay, I'll remember that.")
-
-    elif user_is_asking_a_question(user_input):
-        # Use memory to enrich the prompt
-        relevant_memories = core_memory.search_memory(query=user_input)
-        
-        context = "\n".join([mem['summary'] for mem in relevant_memories])
-        prompt = f"""
-        Background information from my memory:
-        {context}
-
-        User question: {user_input}
-        """
-        # Send the enriched prompt to the LLM
-        # llm_response = call_llm(prompt)
-        # print(f"Agent: {llm_response}")
+**Hypothetical `config.json` for Claude Code-Cli:**
+```json
+{
+  "mcp_servers": [
+    {
+      "name": "CoreMemory",
+      "address": "http://127.0.0.1:5001/mcp"
+    }
+  ]
+}
 ```
+*(Note: This is a hypothetical example. Please consult the specific documentation for Claude Code-Cli on how to register an already running MCP server.)*
 
-## Interaction Patterns
+## How to Use (Interaction)
 
-An agent developer can implement several ways for a user to interact with the memory:
+Once configured, you can interact with the memory service through your agent's natural chat interface. The agent will automatically call the appropriate tool.
 
-1.  **Explicit Commands**: The agent can be programmed to recognize a special prefix (e.g., `/mem`) to give the user direct control.
-    -   `/mem add My API key is 123-xyz.`
-    -   `/mem search API key`
+-   To save a memory: `> remember that the project deadline is next Friday`
+-   To search for a memory: `> what did I say about the project deadline?`
 
-2.  **Implicit Intent Recognition**: The agent uses an LLM to understand the user's natural language intent.
-    -   User: "Hey, remember that my API key is 123-xyz."
-    -   *Agent recognizes the 'remember' intent and calls `core_memory.add_memory()` behind the scenes.*
-
-## How to Extend
-
-This is an open-source project, and contributions are welcome. Here are some ideas for extending Core Memory:
-
--   **Multiple Storage Backends**: Create a storage provider interface and implement backends for SQLite, a vector database (like ChromaDB), or a cloud service.
--   **Smarter Search**: Implement semantic search using sentence embeddings.
--   **Automatic Summarization**: Integrate an LLM call within the `add_memory` function to automatically generate the summary and tags.
-
-## Memory File Location
-
-By default, Core Memory creates and uses a file named `memory_core.json` in the current working directory from where the script is executed. This can be configured by modifying the `DB_FILE` constant in `core_memory.py`.
-
+Your agent, now aware of the `memory.add` and `memory.search` tools, will call your local Core Memory service to fulfill these requests.
