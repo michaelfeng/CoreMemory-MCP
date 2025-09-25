@@ -114,6 +114,20 @@ The configuration process is expected to be similar to Gemini-CLI, likely involv
 ```
 *(Note: This is a hypothetical example. Please consult the specific documentation for Claude Code-Cli on how to register an already running MCP server.)*
 
+## Integration with FastMCP
+
+[FastMCP](https://gofastmcp.com/) is another framework that is compatible with the Model Context Protocol (MCP). Because `CoreMemory-MCP` also follows the MCP standard, they are compatible and can work together.
+
+Here's what you need to know as a user:
+
+*   **Full Compatibility**: You can use any `fastmcp`-based client to connect to your local `CoreMemory-MCP` service. The integration is seamless because both tools "speak" the same protocol.
+
+*   **No Changes for Existing Users**: If you are already using `CoreMemory-MCP` with clients like Cursor or Gemini-CLI, this integration does not change anything for you. Your existing setup will continue to work as before.
+
+*   **Connecting a `fastmcp` Client**: To connect a `fastmcp` client to this service, you will need to provide the client with the address of your local `CoreMemory-MCP` server, which is typically `http://127.0.0.1:5001/mcp`.
+
+*   **Local vs. Cloud**: `CoreMemory-MCP` is designed to be a **local-first** memory service, meaning your data stays on your machine. While `fastmcp` offers a cloud service, please be aware that if you use it, your data might be sent to their servers. You have the choice to keep your memory local by running `CoreMemory-MCP`.
+
 ## How to Use (Interaction)
 
 Once configured, you can interact with the memory service through your agent's natural chat interface. The agent will automatically call the appropriate tool.
