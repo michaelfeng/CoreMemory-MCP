@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.scripts]
-core-memory-server = "memory_service:main"
+core-memory-server = "src.memory_service:main"
 
 [project.urls]
 "Homepage" = "https://github.com/michaelfeng/CoreMemory-MCP"
