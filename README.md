@@ -134,22 +134,22 @@ Here's what you need to know as a user:
 
 For more precise control, you can use slash commands directly in your chat with the agent. This is the recommended way to interact with the memory service as it avoids ambiguity.
 
-*   **/memory add**: Saves a new memory.
-*   **/memory search**: Searches for memories.
-*   **/memory list**: Lists all memories.
+*   **/cortex add**: Saves a new memory.
+*   **/cortex search**: Searches for memories.
+*   **/cortex list**: Lists all memories.
 
 **Examples:**
 
 ```
-> /memory add "The project deadline is next Friday"
+> /cortex add "The project deadline is next Friday"
 ```
 
 ```
-> /memory search "deadline"
+> /cortex search "deadline"
 ```
 
 ```
-> /memory list
+> /cortex list
 ```
 
 *(Note: This functionality depends on the agent's implementation to parse these commands and call the corresponding `memory.*` tools. This feature is planned for clients like Gemini-CLI.)*

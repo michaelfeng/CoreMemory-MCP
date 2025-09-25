@@ -39,7 +39,7 @@ TOOL_MANIFEST = {
     "tools": [
         {
             "name": "memory.add",
-            "description": "Adds a new memory to the long-term memory store.",
+            "description": "Adds a new memory to the long-term memory store. Recommended command: /cortex add <content>",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -53,7 +53,7 @@ TOOL_MANIFEST = {
         },
         {
             "name": "memory.search",
-            "description": "Searches for memories matching a query string.",
+            "description": "Searches for memories matching a query string. Recommended command: /cortex search <query>",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -64,12 +64,12 @@ TOOL_MANIFEST = {
         },
         {
             "name": "memory.list",
-            "description": "Retrieves all memories from the database.",
+            "description": "Retrieves all memories from the database. Recommended command: /cortex list",
             "parameters": {"type": "object", "properties": {}},
         },
         {
             "name": "memory.get",
-            "description": "Retrieves a single memory by its unique ID.",
+            "description": "Retrieves a single memory by its unique ID. Recommended command: /cortex get <memory_id>",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -80,7 +80,7 @@ TOOL_MANIFEST = {
         },
         {
             "name": "memory.delete",
-            "description": "Deletes a memory by its unique ID.",
+            "description": "Deletes a memory by its unique ID. Recommended command: /cortex delete <memory_id>",
             "parameters": {
                 "type": "object",
                 "properties": {

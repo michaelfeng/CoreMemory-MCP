@@ -134,22 +134,22 @@ Claude Code-Cli 也支持 MCP 以使用外部工具。
 
 为了进行更精确的控制，您可以直接在与代理的聊天中使用斜杠命令。这是与记忆服务交互的推荐方式，因为它可以避免自然语言带来的歧义。
 
-*   **/memory add**: 保存一条新记忆。
-*   **/memory search**: 搜索记忆。
-*   **/memory list**: 列出所有记忆。
+*   **/cortex add**: 保存一条新记忆。
+*   **/cortex search**: 搜索记忆。
+*   **/cortex list**: 列出所有记忆。
 
 **示例:**
 
 ```
-> /memory add "项目截止日期是下周五"
+> /cortex add "项目截止日期是下周五"
 ```
 
 ```
-> /memory search "截止日期"
+> /cortex search "截止日期"
 ```
 
 ```
-> /memory list
+> /cortex list
 ```
 
 *（请注意：此功能的实现依赖于代理端（Agent）的解析能力，需要代理能识别这些命令并调用相应的 `memory.*` 工具。我们计划在 Gemini-CLI 等客户端中支持此功能。）*
