@@ -1,4 +1,4 @@
-# CoreMemory-MCP
+# ✨ CoreMemory-MCP
 
 A local, MCP-compliant, long-term memory *service* for AI agents.
 
@@ -8,13 +8,13 @@ A local, MCP-compliant, long-term memory *service* for AI agents.
 
 ---
 
-## What is CoreMemory-MCP?
+## 💡 What is CoreMemory-MCP?
 
 CoreMemory-MCP is a background service that provides a simple and persistent long-term memory for any AI agent that supports the **Model Context Protocol (MCP)**. It allows tools like **Cursor**, **Gemini-CLI**, and **Claude Code-Cli** to retain and recall information across sessions.
 
 It runs as a standalone server on your local machine, acting as a language-agnostic, pluggable brain for your favorite AI tools.
 
-## How It Works
+## ⚙️ How It Works
 
 The architecture is a standard client-server model based on the MCP standard:
 
@@ -24,9 +24,9 @@ The architecture is a standard client-server model based on the MCP standard:
 2.  You configure your client application (e.g., Cursor, Gemini-CLI) to connect to the service.
 3.  Your client application can then discover and execute the memory tools (`memory.add`, `memory.search`, etc.) provided by the service.
 
-## Installation
+## 🚀 Installation
 
-> **Note**: The package is not yet published to PyPI. The following are the planned installation methods.
+> ⚠️ **Note**: The package is not yet published to PyPI. The following are the planned installation methods.
 
 It is recommended to install the package via pip once it is published:
 
@@ -41,7 +41,7 @@ cd CoreMemory-MCP
 pip install -e .
 ```
 
-## Running the Service
+## ▶️ Running the Service
 
 If you installed the package via pip, you can start the service by running the following command in your terminal:
 
@@ -62,9 +62,9 @@ Listening on http://127.0.0.1:5001
 Access the API at the /mcp endpoint.
 Use Ctrl+C to stop.
 ```
-**Important:** Keep this terminal window open. The service needs to be running in the background for your clients to connect to it.
+**⚠️ Important:** Keep this terminal window open. The service needs to be running in the background for your clients to connect to it.
 
-## Configuring Your Client
+## 🔌 Configuring Your Client
 
 Here are specific instructions for popular tools that support MCP.
 
@@ -125,7 +125,7 @@ The configuration process is expected to be similar to Gemini-CLI, likely involv
 ```
 *(Note: This is a hypothetical example. Please consult the specific documentation for Claude Code-Cli on how to register an already running MCP server.)*
 
-## Integration with FastMCP
+## 🤝 Integration with FastMCP
 
 [FastMCP](https://gofastmcp.com/) is another framework that is compatible with the Model Context Protocol (MCP). Because `CoreMemory-MCP` also follows the MCP standard, they are compatible and can work together.
 
@@ -139,9 +139,9 @@ Here's what you need to know as a user:
 
 *   **Local vs. Cloud**: `CoreMemory-MCP` is designed to be a **local-first** memory service, meaning your data stays on your machine. While `fastmcp` offers a cloud service, please be aware that if you use it, your data might be sent to their servers. You have the choice to keep your memory local by running `CoreMemory-MCP`.
 
-## How to Use (Interaction)
+## 💬 How to Use (Interaction)
 
-### Command-Based Interaction (Recommended)
+### ⌨️ Command-Based Interaction (Recommended)
 
 For more precise control, you can use slash commands directly in your chat with the agent. This is the recommended way to interact with the memory service as it avoids ambiguity.
 
@@ -165,7 +165,7 @@ For more precise control, you can use slash commands directly in your chat with 
 
 *(Note: This functionality depends on the agent's implementation to parse these commands and call the corresponding `memory.*` tools. This feature is planned for clients like Gemini-CLI.)*
 
-### Natural Language Interaction
+### 🗣️ Natural Language Interaction
 
 You can also interact with the memory service through natural language. The agent will do its best to understand your intent and call the appropriate tool.
 
