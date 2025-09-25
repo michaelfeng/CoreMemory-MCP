@@ -28,5 +28,6 @@ core-memory-server = "src.memory_service:main"
 "Homepage" = "https://github.com/michaelfeng/CoreMemory-MCP"
 "Bug Tracker" = "https://github.com/michaelfeng/CoreMemory-MCP/issues"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["core_memory", "memory_service"]
