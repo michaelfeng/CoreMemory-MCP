@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "core-memory-mcp"
-version = "0.1.4"
+version = "0.1.5"
 authors = [
   { name="Michael Feng", email="michael@example.com" },
 ]
