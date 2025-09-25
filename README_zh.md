@@ -70,10 +70,10 @@ Use Ctrl+C to stop.
 
 ### 针对 Gemini-CLI
 
-Google Gemini CLI 可以配置为自动启动和使用 MCP 服务器。
+Google Gemini CLI 可以配置为自动启动和使用 MCP 服务器。安装此软件包后，您可以配置 Gemini-CLI 来使用它。
 
 1.  打开 Gemini CLI 配置文件，通常位于 `~/.gemini/settings.json`。
-2.  在 `mcp_servers` 列表中添加一个条目。您必须提供 `memory_service.py` 脚本的**绝对路径**。
+2.  在 `mcp_servers` 列表中添加一个指向 `core-memory-server` 命令的条目。
 
 **`settings.json` 示例：**
 ```json
@@ -82,14 +82,13 @@ Google Gemini CLI 可以配置为自动启动和使用 MCP 服务器。
     {
       "name": "CoreMemory",
       "command": [
-        "python",
-        "/path/to/your/CoreMemory-MCP/memory_service.py"
+        "core-memory-server"
       ]
     }
   ]
 }
 ```
-*请将 `/path/to/your/CoreMemory-MCP/` 替换为您系统上的实际绝对路径。*
+*（此配置假设 `core-memory-server` 命令在您系统的 PATH 中可用，这在 `pip install` 后是标准情况。）*
 
 3.  保存文件。下次运行 `gemini` 时，它将自动启动记忆服务并可以访问 `memory.*` 工具。
 
