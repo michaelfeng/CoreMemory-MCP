@@ -26,18 +26,30 @@ The architecture is a standard client-server model based on the MCP standard:
 
 ## Installation
 
-Clone the repository and install the required Python packages.
+> **Note**: The package is not yet published to PyPI. The following are the planned installation methods.
 
+It is recommended to install the package via pip once it is published:
+
+```bash
+pip install core-memory-mcp
+```
+
+Alternatively, for development, you can clone the repository and install it in editable mode:
 ```bash
 git clone https://github.com/michaelfeng/CoreMemory-MCP.git
 cd CoreMemory-MCP
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Running the Service
 
-Run the `memory_service.py` script in your terminal to start the server.
+If you installed the package via pip, you can start the service by running the following command in your terminal:
 
+```bash
+core-memory-server
+```
+
+If you are running from the source code, you can also run the script directly:
 ```bash
 python memory_service.py
 ```

@@ -26,18 +26,30 @@ CoreMemory-MCP 是一个后台服务，它为任何支持 **模型上下文协�
 
 ## 安装
 
-克隆仓库并安装所需的 Python 包。
+> **请注意**：该软件包尚未发布到 PyPI。以下是计划中的安装方法。
 
+发布后，建议通过 pip 安装：
+
+```bash
+pip install core-memory-mcp
+```
+
+或者，对于开发，您可以克隆仓库并以可编辑模式安装：
 ```bash
 git clone https://github.com/michaelfeng/CoreMemory-MCP.git
 cd CoreMemory-MCP
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## 运行服务
 
-在您的终端中运行 `memory_service.py` 脚本以启动服务器。
+如果您通过 pip 安装了该软件包，您可以在终端中运行以下命令来启动服务：
 
+```bash
+core-memory-server
+```
+
+如果您从源代码运行，您也可以直接运行脚本：
 ```bash
 python memory_service.py
 ```

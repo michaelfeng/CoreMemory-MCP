@@ -144,10 +144,15 @@ async def mcp_endpoint(request: JsonRpcRequest):
         )
 
 
-if __name__ == "__main__":
+def main():
+    """Starts the Core Memory MCP Service."""
     print("--- Starting Core Memory MCP Service ---")
     print("Compatible with the Model Context Protocol.")
     print("Listening on http://127.0.0.1:5001")
     print("Access the API at the /mcp endpoint.")
     print("Use Ctrl+C to stop.")
     uvicorn.run(app, host="0.0.0.0", port=5001)
+
+
+if __name__ == "__main__":
+    main()
