@@ -130,7 +130,33 @@ Here's what you need to know as a user:
 
 ## How to Use (Interaction)
 
-Once configured, you can interact with the memory service through your agent's natural chat interface. The agent will automatically call the appropriate tool.
+### Command-Based Interaction (Recommended)
+
+For more precise control, you can use slash commands directly in your chat with the agent. This is the recommended way to interact with the memory service as it avoids ambiguity.
+
+*   **/memory add**: Saves a new memory.
+*   **/memory search**: Searches for memories.
+*   **/memory list**: Lists all memories.
+
+**Examples:**
+
+```
+> /memory add "The project deadline is next Friday"
+```
+
+```
+> /memory search "deadline"
+```
+
+```
+> /memory list
+```
+
+*(Note: This functionality depends on the agent's implementation to parse these commands and call the corresponding `memory.*` tools. This feature is planned for clients like Gemini-CLI.)*
+
+### Natural Language Interaction
+
+You can also interact with the memory service through natural language. The agent will do its best to understand your intent and call the appropriate tool.
 
 -   To save a memory: `> remember that the project deadline is next Friday`
 -   To search for a memory: `> what did I say about the project deadline?`
