@@ -10,16 +10,17 @@ authors = [
 ]
 description = "A local, MCP-compliant, long-term memory service for AI agents."
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
     "fastapi",
     "uvicorn[standard]",
 ]
+py_modules = ["core_memory", "memory_service"]
 
 [project.scripts]
 core-memory-server = "memory_service:main"
